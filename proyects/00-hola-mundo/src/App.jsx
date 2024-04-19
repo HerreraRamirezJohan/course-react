@@ -6,16 +6,19 @@ export function App() {
     return (
         <>
             <TwitterFollowCard
+                initialIsFollowing={true}
                 formatUserName={addAt}
                 username='willsmith'
                 name='Normal Avatar'
             />
             <TwitterFollowCard
+                initialIsFollowing={true}
                 formatUserName={addAt}
                 username='willsmith'
                 name='Normal Avatar 2'
             />
             <TwitterFollowCard
+                initialIsFollowing={false}
                 formatUserName={addAt}
                 username='willsmith'
                 name='Normal Avatar 3'

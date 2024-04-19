@@ -53,7 +53,7 @@ function App() {
     //guardar partida 
     saveGameToStorage({
       board: newBoard,
-      turn:newTurn
+      turn: newTurn
     })
   }
 

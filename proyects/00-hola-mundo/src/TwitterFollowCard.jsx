@@ -1,10 +1,10 @@
 import { useState } from "react";
 
-export function TwitterFollowCard({ formatUserName, username, name }) {
+export function TwitterFollowCard({ formatUserName, username, name, initialIsFollowing }) {
     // const state = useState(false);
     // const isFollowing = state[0];
     // const setIsFollowing = state[1];
-    const [isFollowing, setIsFollowing] = useState(false);
+    const [isFollowing, setIsFollowing] = useState(initialIsFollowing);
     const handleClick = () => {
         setIsFollowing(!isFollowing);
     }
@@ -39,6 +39,7 @@ export function TwitterFollowCard({ formatUserName, username, name }) {
                     onClick={handleClick}
                 >
                     {text}
+                    <span className="hidden">Dejar de Seguir</span>
                 </button>
             </aside>
         </article>

@@ -22,7 +22,7 @@ const FollowMouse = () => {
   }, [enabled])
   return (
     <>
-      {/* <div style={{
+      <div style={{
         position: 'absolute',
         backgroundColor: 'rgba(0, 0, 0, 0.5)',
         border: '1px solid #fff',
@@ -35,10 +35,7 @@ const FollowMouse = () => {
         height: 50,
         transform: `translate(${position.x}px, ${position.y}px)`
       }}
-      /> */}
-      <div className="absolute bg-black bg-opacity-50 border border-white rounded-full opacity-80 pointer-events-none left-[-25px] top-[-25px] w-12 h-12" style={{ transform: `translate(${position.x}px, ${position.y}px)` }}>
-        {/* Contenido */}
-      </div>
+      />
       <button onClick={() => { setEnabled(!enabled) }}>
         {enabled ? 'Desactivar' : 'Activar'}
         seguir puntero
@@ -54,7 +51,7 @@ function App() {
   return (
     <>
       {mounted && <FollowMouse />}
-      <button onClick={() => { setMounted(!mounted) }}>
+      <button onClick={()=>{setMounted(!mounted)}}>
         Mount FollowMouse
       </button>
     </>
