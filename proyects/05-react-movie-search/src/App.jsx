@@ -5,7 +5,6 @@ import { Movies } from './components/Movies'
 import { useMovies } from './hooks/useMovies.js'
 
 function useSearch() {
-
   const [searchMovie, setSearchMovie] = useState('')
   const [error, setError] = useState(null)
   const isFirstInput = useRef(true)
@@ -35,13 +34,18 @@ function useSearch() {
 }
 
 function App() {
-  const { searchMovie, setSearchMovie, error } = useSearch()
-  const { movies: mappedMovies, getMovies } = useMovies({ search: searchMovie })
 
+  const [sort, setSort] = useState(false)
+  const { searchMovie, setSearchMovie, error } = useSearch()
+  const { movies: mappedMovies, getMovies } = useMovies({ search: searchMovie , sort})
+
+  const handleSort = (event) => {
+    setSort(!sort)
+  }
 
   const handleSubmit = (event) => {
     event.preventDefault()
-    getMovies()
+    getMovies({search:searchMovie})
   }
 
   const handleChange = (event) => {
@@ -59,13 +63,14 @@ function App() {
     <div className='flex flex-col justify-center items-center'>
       <header>
         <h1>Movies & Series</h1>
-        <form className='flex' onSubmit={handleSubmit}>
+        <form className='flex items-center' onSubmit={handleSubmit}>
           <input
             onChange={handleChange}
             name='movieName'
             value={searchMovie}
             type="text"
             placeholder='Avengers, Star Wars, Fantastic Four...' />
+            <input type="checkbox" onChange={handleSort} checked={sort}/>
           <button type='submit'>Search</button>
         </form>
         {error && <p className='text-red-600'>{error}</p>}
