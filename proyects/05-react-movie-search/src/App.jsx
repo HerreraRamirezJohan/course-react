@@ -1,8 +1,9 @@
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import './App.css'
 
 import { Movies } from './components/Movies'
 import { useMovies } from './hooks/useMovies.js'
+import debounce from 'just-debounce-it'
 
 function useSearch() {
   const [searchMovie, setSearchMovie] = useState('')
@@ -37,7 +38,14 @@ function App() {
 
   const [sort, setSort] = useState(false)
   const { searchMovie, setSearchMovie, error } = useSearch()
-  const { movies: mappedMovies, getMovies } = useMovies({ search: searchMovie , sort})
+  const { movies: mappedMovies, getMovies } = useMovies({ search: searchMovie, sort })
+
+  const debounceGetMovies = useCallback(
+    debounce(search => {
+      getMovies({ search })
+    }, 300)
+    ,[]
+  )
 
   const handleSort = (event) => {
     setSort(!sort)
@@ -45,7 +53,7 @@ function App() {
 
   const handleSubmit = (event) => {
     event.preventDefault()
-    getMovies({search:searchMovie})
+    getMovies({ search: searchMovie })
   }
 
   const handleChange = (event) => {
@@ -54,7 +62,8 @@ function App() {
     if (newSearchMovie.length > 20) return //No sea un nombre mayor a 20
     if (newSearchMovie.startsWith(' ')) return //no coloque espacios vacios al inicio
 
-    setSearchMovie(newSearchMovie)
+    setSearchMovie(newSearchMovie) // <== El input es controlado y nosotros lo seteamos no el usuario
+    debounceGetMovies(newSearchMovie) // <== Busqueda en tiempo real.
   }
 
 
@@ -70,7 +79,7 @@ function App() {
             value={searchMovie}
             type="text"
             placeholder='Avengers, Star Wars, Fantastic Four...' />
-            <input type="checkbox" onChange={handleSort} checked={sort}/>
+          <input type="checkbox" onChange={handleSort} checked={sort} />
           <button type='submit'>Search</button>
         </form>
         {error && <p className='text-red-600'>{error}</p>}
