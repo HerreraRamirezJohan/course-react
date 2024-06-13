@@ -14,5 +14,10 @@ const compat = new FlatCompat({ baseDirectory: __dirname, recommendedConfig: plu
 export default [
   { languageOptions: { globals: globals.browser } },
   ...compat.extends('standard'),
-  pluginReactConfig
+  pluginReactConfig,
+  {
+    rules: {
+      'react/prop-types': 'off' // Deshabilita la validación de prop-types
+    }
+  }
 ]
